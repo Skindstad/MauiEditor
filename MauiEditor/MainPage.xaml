@@ -5,7 +5,7 @@
 
     <ScrollView>
         <VerticalStackLayout>
-            <Label Text="MainView" FontSize="Large" />
+            <Label Text="tempWindow" FontSize="Large" />
         </VerticalStackLayout>
     </ScrollView>
 
