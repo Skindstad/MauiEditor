@@ -64,7 +64,7 @@ namespace MauiEditor.Model
         {
             return DataId.CompareTo(data.DataId);
         }
-        private static readonly string[] validatedProperties = { "KomNr", "City", "Gruppe", "Year", "Tal" };
+        private static readonly string[] validatedProperties = ["KomNr", "City", "Gruppe", "Year", "Tal"];
         public bool IsValid
         {
             get
@@ -103,29 +103,29 @@ namespace MauiEditor.Model
             return null;
         }
 
-        private string ValidateKomNr()
+        private string? ValidateKomNr()
         {
             if (KomNr.Length != 3) return "Kom_nr must be a number of 3 digits";
             foreach (char c in KomNr) if (c < '0' || c > '9') return "KomNr must be a number";
             return null;
         }
-        private string ValidateCity()
+        private string? ValidateCity()
         {
             if (City == null || City.Length == 0) return "City can not be empty";
             return null;
         }
-        private string ValidateGruppe()
+        private string? ValidateGruppe()
         {
             if (Gruppe == null || Gruppe.Length == 0) return "Gruppe can not be empty";
             return null;
         }
-        private string ValidateYear()
+        private string? ValidateYear()
         {
             if (Year.Length != 4) return "Year must be a number of 4 digits";
             foreach (char c in Year) if (c < '0' || c > '9') return "Year must be a number of 4 digits";
             return null;
         }
-        private string ValidateTal()
+        private string? ValidateTal()
         {
             foreach (char c in Num) if (c < '0' || c > '9') return "Number must be a number";
             return null;

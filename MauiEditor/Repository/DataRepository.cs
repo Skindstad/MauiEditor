@@ -12,7 +12,7 @@ namespace MauiEditor.Repository
 {
     public class DataRepository : Repository, IEnumerable<Data>
     {
-        private List<Data> list = new List<Data>();
+        private readonly List<Data> list = [];
 
         public IEnumerator<Data> GetEnumerator()
         {
@@ -24,11 +24,12 @@ namespace MauiEditor.Repository
             return GetEnumerator();
         }
 
-        public void Search(string komNr, string city, string gruppe, string year)
+        public void Search(string city, string gruppe, string year)
         {
             try
             {
-                SqlCommand command = new SqlCommand("Select Data.Id, Data.Kom_nr, City, Gruppe, Aarstal, Tal From Data Join Keynummer on Data.GruppeId = Keynummer.Id Join Kommune on Data.Kom_nr = Kommune.Kom_nr WHERE Aarstal LIKE @Year AND City LIKE @City AND Gruppe LIKE @Gruppe", connection);
+                SqlCommand sqlCommand = new("Select Data.Id, Data.Kom_nr, City, Gruppe, Aarstal, Tal From Data Join Keynummer on Data.GruppeId = Keynummer.Id Join Kommune on Data.Kom_nr = Kommune.Kom_nr WHERE Aarstal LIKE @Year AND City LIKE @City AND Gruppe LIKE @Gruppe", connection);
+                SqlCommand command = sqlCommand;
                 //command.Parameters.Add(CreateParam("@KomNr", komNr + "%", SqlDbType.NVarChar));
                 command.Parameters.Add(CreateParam("@City", city + "%", SqlDbType.NVarChar));
                 command.Parameters.Add(CreateParam("@Gruppe", gruppe + "%", SqlDbType.NVarChar));
@@ -36,7 +37,16 @@ namespace MauiEditor.Repository
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 list.Clear();
-                while (reader.Read()) list.Add(new Data(reader[0].ToString(), reader[1].ToString(), reader[2].ToString(), reader[3].ToString(), reader[4].ToString(), reader[5].ToString()));
+                while (reader.Read())
+                {
+                    list.Add(new Data(reader[0].ToString(),
+                                      reader[1].ToString(),
+                                      reader[2].ToString(),
+                                      reader[3].ToString(),
+                                      reader[4].ToString(),
+                                      reader[5].ToString()));
+                }
+
                 OnChanged(DbOperation.SELECT, DbModeltype.Data);
             }
             catch (Exception ex)
@@ -100,7 +110,8 @@ namespace MauiEditor.Repository
                     int to = int.Parse(id);
                     id = (id + 1).ToString();
                     string gruppeId = KeynummerRepository.GetId(data.Gruppe);
-                    SqlCommand command = new SqlCommand("INSERT INTO Data (Id, Kom_nr, GruppeID, Aarstal, Tal) VALUES (@Id, @KomNr, @Gruppe, @Year, @Num)", connection);
+                    SqlCommand sqlCommand = new("INSERT INTO Data (Id, Kom_nr, GruppeID, Aarstal, Tal) VALUES (@Id, @KomNr, @Gruppe, @Year, @Num)", connection);
+                    SqlCommand command = sqlCommand;
                     command.Parameters.Add(CreateParam("@Id", id, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@KomNr", data.KomNr, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@Gruppe", gruppeId, SqlDbType.NVarChar));
@@ -144,7 +155,8 @@ namespace MauiEditor.Repository
                 {
                     string dataId = GetId(data.KomNr, data.Gruppe, data.Year);
                     string gruppeId = KeynummerRepository.GetId(data.Gruppe);
-                    SqlCommand command = new SqlCommand("UPDATE Data SET Kom_nr = @KomNr, GruppeId = @Gruppe, Aarstal = @Year, Tal = @Num WHERE Id = @DataId", connection);
+                    SqlCommand sqlCommand = new("UPDATE Data SET Kom_nr = @KomNr, GruppeId = @Gruppe, Aarstal = @Year, Tal = @Num WHERE Id = @DataId", connection);
+                    SqlCommand command = sqlCommand;
                     command.Parameters.Add(CreateParam("@DataId", dataId, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@KomNr", data.KomNr, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@Gruppe", gruppeId, SqlDbType.NVarChar));
@@ -192,16 +204,19 @@ namespace MauiEditor.Repository
             try
             {
                 string dataId = GetId(data.KomNr, data.Gruppe, data.Year);
-                SqlCommand command = new SqlCommand("DELETE FROM Data WHERE Id = @DataId", connection);
-                command.Parameters.Add(CreateParam("@DataId", dataId, SqlDbType.NVarChar));
-                connection.Open();
-                if (command.ExecuteNonQuery() == 1)
+                using (SqlCommand command = new("DELETE FROM Data WHERE Id = @DataId", connection))
                 {
-                    list.Remove(new Data(dataId, "", "", "", "", ""));
-                    OnChanged(DbOperation.DELETE, DbModeltype.Data);
-                    return;
+                    command.Parameters.Add(CreateParam("@DataId", dataId, SqlDbType.NVarChar));
+                    connection.Open();
+                    if (command.ExecuteNonQuery() == 1)
+                    {
+                        list.Remove(new Data(dataId, "", "", "", "", ""));
+                        OnChanged(DbOperation.DELETE, DbModeltype.Data);
+                        return;
+                    }
                 }
-                error = string.Format("Contact could not be deleted");
+
+                error = string.Format("Data could not be deleted");
             }
             catch (Exception ex)
             {
@@ -211,7 +226,7 @@ namespace MauiEditor.Repository
             {
                 if (connection != null && connection.State == ConnectionState.Open) connection.Close();
             }
-            throw new DbException("Error in Contact repositiory: " + error);
+            throw new DbException("Error in Data repositiory: " + error);
         }
 
         public static string GetId(string komNr, string gruppe, string year)
@@ -221,10 +236,11 @@ namespace MauiEditor.Repository
             {
                 string GruppeID = KeynummerRepository.GetId(gruppe);
                 connection = new SqlConnection(ConfigurationManager.ConnectionStrings["post"].ConnectionString);
-                SqlCommand command = new SqlCommand("SELECT Id FROM Data WHERE GruppeId = @Gruppe AND Kom_Nr = @KomNr AND Aarstal = @Year", connection);
-                SqlParameter param = new SqlParameter("@Gruppe", SqlDbType.NVarChar);
-                SqlParameter param2 = new SqlParameter("@KomNr", SqlDbType.NVarChar);
-                SqlParameter param3 = new SqlParameter("@Year", SqlDbType.NVarChar);
+                SqlCommand sqlCommand = new("SELECT Id FROM Data WHERE GruppeId = @Gruppe AND Kom_Nr = @KomNr AND Aarstal = @Year", connection);
+                SqlCommand command = sqlCommand;
+                SqlParameter param = new("@Gruppe", SqlDbType.NVarChar);
+                SqlParameter param2 = new("@KomNr", SqlDbType.NVarChar);
+                SqlParameter param3 = new("@Year", SqlDbType.NVarChar);
                 param.Value = GruppeID;
                 param2.Value = komNr;
                 param3.Value = year;
@@ -250,7 +266,8 @@ namespace MauiEditor.Repository
             try
             {
                 connection = new SqlConnection(ConfigurationManager.ConnectionStrings["post"].ConnectionString);
-                SqlCommand command = new SqlCommand("SELECT COUNT(Id )FROM Data", connection);
+                SqlCommand sqlCommand = new("SELECT COUNT(Id )FROM Data", connection);
+                SqlCommand command = sqlCommand;
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.Read()) return reader[0].ToString();

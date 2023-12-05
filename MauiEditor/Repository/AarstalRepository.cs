@@ -12,7 +12,7 @@ namespace MauiEditor.Repository
 {
     public class AarstalRepository : Repository, IEnumerable<Aarstal>
     {
-        private List<Aarstal> list = new List<Aarstal>();
+        private readonly List<Aarstal> list = [];
 
         public IEnumerator<Aarstal> GetEnumerator()
         {
@@ -28,8 +28,9 @@ namespace MauiEditor.Repository
         {
             try
             {
-                SqlCommand command = new SqlCommand("SELECT * FROM Aarstal WHERE Years LIKE @Year", connection);
-                command.Parameters.Add(CreateParam("@Year", year + "%", SqlDbType.NVarChar));
+                SqlCommand sqlCommand = new("SELECT * FROM Aarstal WHERE Years LIKE @Year", connection);
+                SqlCommand command = sqlCommand;
+                command.Parameters.Add(Repository.CreateParam("@Year", year + "%", SqlDbType.NVarChar));
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 list.Clear();
@@ -49,13 +50,14 @@ namespace MauiEditor.Repository
         public void Add(string year)
         {
             string error = "";
-            Aarstal aarstal = new Aarstal(year);
+            Aarstal aarstal = new(year);
             if (aarstal.IsValid)
             {
                 try
                 {
-                    SqlCommand command = new SqlCommand("INSERT INTO Aarstal (Years) VALUES (@Year)", connection);
-                    command.Parameters.Add(CreateParam("@Year", year, SqlDbType.NVarChar));
+                    SqlCommand sqlCommand = new("INSERT INTO Aarstal (Years) VALUES (@Year)", connection);
+                    SqlCommand command = sqlCommand;
+                    command.Parameters.Add(Repository.CreateParam("@Year", year, SqlDbType.NVarChar));
                     connection.Open();
                     if (command.ExecuteNonQuery() == 1)
                     {
@@ -86,9 +88,10 @@ namespace MauiEditor.Repository
             {
                 try
                 {
-                    SqlCommand command = new SqlCommand("UPDATE Aarstal SET Years = @NewYear WHERE Years = @OldYear", connection);
-                    command.Parameters.Add(CreateParam("@OldYear", oldYear, SqlDbType.NVarChar));
-                    command.Parameters.Add(CreateParam("@NewYear", newYear, SqlDbType.NVarChar));
+                    SqlCommand sqlCommand = new("UPDATE Aarstal SET Years = @NewYear WHERE Years = @OldYear", connection);
+                    SqlCommand command = sqlCommand;
+                    command.Parameters.Add(Repository.CreateParam("@OldYear", oldYear, SqlDbType.NVarChar));
+                    command.Parameters.Add(Repository.CreateParam("@NewYear", newYear, SqlDbType.NVarChar));
                     connection.Open();
                     if (command.ExecuteNonQuery() == 1)
                     {
@@ -112,8 +115,8 @@ namespace MauiEditor.Repository
                     if (connection != null && connection.State == ConnectionState.Open) connection.Close();
                 }
             }
-            else error = "Illegal value for city";
-            throw new DbException("Error in Zipcode repositiory: " + error);
+            else error = "Illegal value for year";
+            throw new DbException("Error in Aarstal repositiory: " + error);
         }
 
         public void Remove(string year)
@@ -121,8 +124,9 @@ namespace MauiEditor.Repository
             string error = "";
             try
             {
-                SqlCommand command = new SqlCommand("DELETE FROM Aarstal WHERE Years = @Year", connection);
-                command.Parameters.Add(CreateParam("@Year", year, SqlDbType.NVarChar));
+                SqlCommand sqlCommand = new("DELETE FROM Aarstal WHERE Years = @Year", connection);
+                SqlCommand command = sqlCommand;
+                command.Parameters.Add(Repository.CreateParam("@Year", year, SqlDbType.NVarChar));
                 connection.Open();
                 if (command.ExecuteNonQuery() == 1)
                 {
@@ -130,7 +134,7 @@ namespace MauiEditor.Repository
                     OnChanged(DbOperation.DELETE, DbModeltype.Aarstal);
                     return;
                 }
-                error = string.Format("Zipcode {0} could not be deleted", year);
+                error = string.Format("Aarstal {0} could not be deleted", year);
             }
             catch (Exception ex)
             {
@@ -140,7 +144,7 @@ namespace MauiEditor.Repository
             {
                 if (connection != null && connection.State == ConnectionState.Open) connection.Close();
             }
-            throw new DbException("Error in Zipcode repositiory: " + error);
+            throw new DbException("Error in Aarstal repositiory: " + error);
         }
 
         public static string GetYear(string year)
@@ -149,9 +153,13 @@ namespace MauiEditor.Repository
             try
             {
                 connection = new SqlConnection(ConfigurationManager.ConnectionStrings["post"].ConnectionString);
-                SqlCommand command = new SqlCommand("SELECT Year FROM Aarstal WHERE Years = @Year", connection);
-                SqlParameter param = new SqlParameter("@Year", SqlDbType.NVarChar);
-                param.Value = year;
+                SqlCommand sqlCommand = new("SELECT Year FROM Aarstal WHERE Years = @Year", connection);
+                SqlCommand command = sqlCommand;
+                SqlParameter sqlParameter = new("@Year", SqlDbType.NVarChar)
+                {
+                    Value = year
+                };
+                SqlParameter param = sqlParameter;
                 command.Parameters.Add(param);
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();

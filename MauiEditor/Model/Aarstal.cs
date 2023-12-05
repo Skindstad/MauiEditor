@@ -64,13 +64,13 @@ namespace MauiEditor.Model
             get { return Validate(propertyName); }
         }
 
-        private string Validate(string property)
+        private string? Validate(string property)
         {
             if (property.Equals("Year")) return Year != null && YearOk(Year.Trim()) ? null : "Illegal Year";
             return null;
         }
 
-        private bool YearOk(string year)
+        private static bool YearOk(string year)
         {
             if (year.Length != 4) return false;
             foreach (char c in year) if (c < '0' || c > '9') return false;

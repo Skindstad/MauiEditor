@@ -12,7 +12,7 @@ namespace MauiEditor.Repository
 {
     public class KommuneRepository : Repository, IEnumerable<Kommune>
     {
-        private List<Kommune> list = new List<Kommune>();
+        private readonly List<Kommune> list = [];
 
         public IEnumerator<Kommune> GetEnumerator()
         {
@@ -28,13 +28,18 @@ namespace MauiEditor.Repository
         {
             try
             {
-                SqlCommand command = new SqlCommand("SELECT Kom_nr, City FROM Kommune WHERE Kom_nr LIKE @KomNr AND City LIKE @City ", connection);
+                SqlCommand command = new("SELECT Kom_nr, City FROM Kommune WHERE Kom_nr LIKE @KomNr AND City LIKE @City ", connection);
                 command.Parameters.Add(CreateParam("@KomNr", komNr + "%", SqlDbType.NVarChar));
                 command.Parameters.Add(CreateParam("@City", city + "%", SqlDbType.NVarChar));
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 list.Clear();
-                while (reader.Read()) list.Add(new Kommune(reader[0].ToString(), reader[1].ToString()));
+                while (reader.Read())
+                {
+                    list.Add(new Kommune(reader[0].ToString(),
+                                         reader[1].ToString()));
+                }
+
                 OnChanged(DbOperation.SELECT, DbModeltype.Kommune);
             }
             catch (Exception ex)
@@ -51,12 +56,12 @@ namespace MauiEditor.Repository
         {
             string error = "";
             city = city.Trim();
-            Kommune kommune = new Kommune(komNr, city);
+            Kommune kommune = new(komNr, city);
             if (kommune.IsValid)
             {
                 try
                 {
-                    SqlCommand command = new SqlCommand("INSERT INTO Kommune (Kom_nr, City) VALUES (@KomNr, @City)", connection);
+                    SqlCommand command = new("INSERT INTO Kommune (Kom_nr, City) VALUES (@KomNr, @City)", connection);
                     command.Parameters.Add(CreateParam("@KomNr", komNr, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@City", city, SqlDbType.NVarChar));
                     connection.Open();
@@ -90,7 +95,7 @@ namespace MauiEditor.Repository
             {
                 try
                 {
-                    SqlCommand command = new SqlCommand("UPDATE Kommune SET City = @City WHERE Kom_nr = @KomNr", connection);
+                    SqlCommand command = new("UPDATE Kommune SET City = @City WHERE Kom_nr = @KomNr", connection);
                     command.Parameters.Add(CreateParam("@KomNr", komNr, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@City", city, SqlDbType.NVarChar));
                     connection.Open();
@@ -125,9 +130,9 @@ namespace MauiEditor.Repository
             string error = "";
             try
             {
-                SqlCommand command = new SqlCommand("DELETE FROM Data WHERE Kom_nr = @KomNr", connection);
+                SqlCommand command = new("DELETE FROM Data WHERE Kom_nr = @KomNr", connection);
                 command.Parameters.Add(CreateParam("@KomNr", komNr, SqlDbType.NVarChar));
-                SqlCommand command2 = new SqlCommand("DELETE FROM Kommune WHERE Kom_nr = @KomNr", connection);
+                SqlCommand command2 = new("DELETE FROM Kommune WHERE Kom_nr = @KomNr", connection);
                 command2.Parameters.Add(CreateParam("@KomNr", komNr, SqlDbType.NVarChar));
                 connection.Open();
                 command.ExecuteNonQuery();
@@ -156,9 +161,11 @@ namespace MauiEditor.Repository
             try
             {
                 connection = new SqlConnection(ConfigurationManager.ConnectionStrings["post"].ConnectionString);
-                SqlCommand command = new SqlCommand("SELECT City FROM Kommune WHERE Kom_nr = @KomNr", connection);
-                SqlParameter param = new SqlParameter("@KomNr", SqlDbType.NVarChar);
-                param.Value = komNr;
+                SqlCommand command = new("SELECT City FROM Kommune WHERE Kom_nr = @KomNr", connection);
+                SqlParameter param = new("@KomNr", SqlDbType.NVarChar)
+                {
+                    Value = komNr
+                };
                 command.Parameters.Add(param);
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
@@ -179,9 +186,11 @@ namespace MauiEditor.Repository
             try
             {
                 connection = new SqlConnection(ConfigurationManager.ConnectionStrings["post"].ConnectionString);
-                SqlCommand command = new SqlCommand("SELECT Kom_nr FROM Kommune WHERE City = @City", connection);
-                SqlParameter param = new SqlParameter("@City", SqlDbType.NVarChar);
-                param.Value = city;
+                SqlCommand command = new("SELECT Kom_nr FROM Kommune WHERE City = @City", connection);
+                SqlParameter param = new("@City", SqlDbType.NVarChar)
+                {
+                    Value = city
+                };
                 command.Parameters.Add(param);
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();

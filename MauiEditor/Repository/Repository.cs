@@ -9,24 +9,14 @@ namespace MauiEditor.Repository
     public enum DbModeltype { Data, Keynummer, Kommune, Aarstal }
 
     // EventArgs for en databaseoperation.
-    public class DbEventArgs : EventArgs
+    public class DbEventArgs(DbOperation operation, DbModeltype modeltype) : EventArgs
     {
-        public DbOperation Operation { get; private set; }                    // databaseoperation
-        public DbModeltype Modeltype { get; private set; }                    // repository
-
-        public DbEventArgs(DbOperation operation, DbModeltype modeltype)
-        {
-            Operation = operation;
-            Modeltype = modeltype;
-        }
+        public DbOperation Operation { get; private set; } = operation;
+        public DbModeltype Modeltype { get; private set; } = modeltype;
     }
     // Exception type programmets repositories.
-    public class DbException : Exception
+    public class DbException(string message) : Exception(message)
     {
-        public DbException(string message)
-          : base(message)
-        {
-        }
     }
 
     public delegate void DbEventHandler(object sender, DbEventArgs e);
@@ -52,13 +42,15 @@ namespace MauiEditor.Repository
 
         public void OnChanged(DbOperation opr, DbModeltype mt)
         {
-            if (RepositoryChanged != null) RepositoryChanged(this, new DbEventArgs(opr, mt));
+            RepositoryChanged?.Invoke(this, new DbEventArgs(opr, mt));
         }
 
-        protected SqlParameter CreateParam(string name, object value, SqlDbType type)
+        protected static SqlParameter CreateParam(string name, object value, SqlDbType type)
         {
-            SqlParameter param = new SqlParameter(name, type);
-            param.Value = value;
+            SqlParameter param = new(name, type)
+            {
+                Value = value
+            };
             return param;
         }
     }
