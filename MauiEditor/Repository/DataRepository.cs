@@ -201,7 +201,7 @@ namespace MauiEditor.Repository
                     OnChanged(DbOperation.DELETE, DbModeltype.Data);
                     return;
                 }
-                error = string.Format("Contact could not be deleted");
+                error = string.Format("Data could not be deleted");
             }
             catch (Exception ex)
             {
@@ -211,7 +211,7 @@ namespace MauiEditor.Repository
             {
                 if (connection != null && connection.State == ConnectionState.Open) connection.Close();
             }
-            throw new DbException("Error in Contact repositiory: " + error);
+            throw new DbException("Error in Data repositiory: " + error);
         }
 
         public static string GetId(string komNr, string gruppe, string year)

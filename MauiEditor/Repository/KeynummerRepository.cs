@@ -146,7 +146,7 @@ namespace MauiEditor.Repository
             {
                 if (connection != null && connection.State == ConnectionState.Open) connection.Close();
             }
-            throw new DbException("Error in Zipcode repositiory: " + error);
+            throw new DbException("Error in Keynummer repositiory: " + error);
         }
 
         public static string GetGruppe(string key)

@@ -112,8 +112,8 @@ namespace MauiEditor.Repository
                     if (connection != null && connection.State == ConnectionState.Open) connection.Close();
                 }
             }
-            else error = "Illegal value for city";
-            throw new DbException("Error in Zipcode repositiory: " + error);
+            else error = "Illegal value for year";
+            throw new DbException("Error in Aarstal repositiory: " + error);
         }
 
         public void Remove(string year)
@@ -130,7 +130,7 @@ namespace MauiEditor.Repository
                     OnChanged(DbOperation.DELETE, DbModeltype.Aarstal);
                     return;
                 }
-                error = string.Format("Zipcode {0} could not be deleted", year);
+                error = string.Format("Aarstal {0} could not be deleted", year);
             }
             catch (Exception ex)
             {
@@ -140,7 +140,7 @@ namespace MauiEditor.Repository
             {
                 if (connection != null && connection.State == ConnectionState.Open) connection.Close();
             }
-            throw new DbException("Error in Zipcode repositiory: " + error);
+            throw new DbException("Error in Aarstal repositiory: " + error);
         }
 
         public static string GetYear(string year)
