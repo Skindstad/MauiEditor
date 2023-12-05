@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MauiEditor.Model;
+using System.Configuration;
 
 namespace MauiEditor.Repository
 {
@@ -218,7 +219,7 @@ namespace MauiEditor.Repository
             SqlConnection connection = null;
             try
             {
-                string GruppeID = KeyNummerRepository.GetId(gruppe);
+                string GruppeID = KeynummerRepository.GetId(gruppe);
                 connection = new SqlConnection(ConfigurationManager.ConnectionStrings["post"].ConnectionString);
                 SqlCommand command = new SqlCommand("SELECT Id FROM Data WHERE GruppeId = @Gruppe AND Kom_Nr = @KomNr AND Aarstal = @Year", connection);
                 SqlParameter param = new SqlParameter("@Gruppe", SqlDbType.NVarChar);
