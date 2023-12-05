@@ -2,10 +2,51 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiEditor.MainPage">
-
+    <ContentPage.MenuBarItems>
+        <MenuBarItem Text="Funtions">
+            <MenuFlyoutItem Text="Skab ny data" Command="{Binding InsertDataCammand}"/>
+            <MenuFlyoutItem Text="Manage Kommuner" Command="{Binding KommuneCommand}" />
+            <MenuFlyoutSeparator/>
+            <MenuFlyoutItem Text="Tøm Felterne" Command="{Binding ClearCommand}" />
+            <MenuFlyoutSeparator/>
+            <MenuFlyoutItem Text="Luk"
+                            Command="{Binding ExitCommand}" />
+        </MenuBarItem>
+    </ContentPage.MenuBarItems>
     <ScrollView>
         <VerticalStackLayout>
-            <Label Text="MainView" FontSize="Large" />
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Text="Kommune"/>
+                <Label Grid.Column="2" Text="Gruppe"/>
+                <Label Grid.Column="4" Text="Aarstal"/>
+                <Entry Grid.Row="1" Grid.Column="0"/>
+                <Entry Grid.Row="1" Grid.Column="2"/>
+                <Entry Grid.Row="1" Grid.Column="4"/>
+
+                <Button Grid.Row="1" Grid.Column="8" Text="Søg" Command="{Binding SearchCommand}"/>
+
+                <ListView Grid.Row="2" ItemsSource="{Binding Data}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell Text="a" Detail="sadad"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            
+            </Grid>
         </VerticalStackLayout>
     </ScrollView>
 

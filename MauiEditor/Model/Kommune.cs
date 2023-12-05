@@ -76,7 +76,7 @@ namespace MauiEditor.Model
             return null;
         }
 
-        private bool NrOk(string komNr)
+        private static bool NrOk(string komNr)
         {
             if (komNr.Length != 3) return false;
             foreach (char c in komNr) if (c < '0' || c > '9') return false;

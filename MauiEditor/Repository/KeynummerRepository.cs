@@ -12,7 +12,7 @@ namespace MauiEditor.Repository
 {
     public class KeynummerRepository : Repository, IEnumerable<Keynummer>
     {
-        private List<Keynummer> list = new List<Keynummer>();
+        private readonly List<Keynummer> list = [];
 
         public IEnumerator<Keynummer> GetEnumerator()
         {
@@ -28,13 +28,14 @@ namespace MauiEditor.Repository
         {
             try
             {
-                SqlCommand command = new SqlCommand("SELECT Id, Gruppe FROM Keynummer WHERE Id LIKE @KeyId AND Gruppe LIKE @Gruppe", connection);
+                SqlCommand command = new("SELECT Id, Gruppe FROM Keynummer WHERE Id LIKE @KeyId AND Gruppe LIKE @Gruppe", connection);
                 command.Parameters.Add(CreateParam("@Id", id + "%", SqlDbType.NVarChar));
                 command.Parameters.Add(CreateParam("@Gruppe", gruppe + "%", SqlDbType.NVarChar));
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 list.Clear();
-                while (reader.Read()) list.Add(new Keynummer(reader[0].ToString(), reader[1].ToString()));
+                while (reader.Read()) list.Add(new Keynummer(reader[0].ToString(),
+                                                             reader[1].ToString()));
                 OnChanged(DbOperation.SELECT, DbModeltype.Keynummer);
             }
             catch (Exception ex)
@@ -51,14 +52,14 @@ namespace MauiEditor.Repository
         {
             string error = "";
             gruppe = gruppe.Trim();
-            int count = list.Count();
+            int count = list.Count;
             string keyId = (count + 1).ToString();
-            Keynummer keynummer = new Keynummer(keyId, gruppe);
+            Keynummer keynummer = new(keyId, gruppe);
             if (keynummer.IsValid)
             {
                 try
                 {
-                    SqlCommand command = new SqlCommand("INSERT INTO Keynummer (Id, Gruppe) VALUES (@Id, @Gruppe)", connection);
+                    SqlCommand command = new("INSERT INTO Keynummer (Id, Gruppe) VALUES (@Id, @Gruppe)", connection);
                     command.Parameters.Add(CreateParam("@Id", keyId, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@Gruppe", gruppe, SqlDbType.NVarChar));
                     connection.Open();
@@ -92,7 +93,7 @@ namespace MauiEditor.Repository
             {
                 try
                 {
-                    SqlCommand command = new SqlCommand("UPDATE Keynummer SET Gruppe = @Gruppe WHERE Id = @KeyId", connection);
+                    SqlCommand command = new("UPDATE Keynummer SET Gruppe = @Gruppe WHERE Id = @KeyId", connection);
                     command.Parameters.Add(CreateParam("@KeyId", key, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@Gruppe", gruppe, SqlDbType.NVarChar));
                     connection.Open();
@@ -127,7 +128,7 @@ namespace MauiEditor.Repository
             string error = "";
             try
             {
-                SqlCommand command = new SqlCommand("DELETE FROM Keynummer WHERE Id = @KeyId", connection);
+                SqlCommand command = new("DELETE FROM Keynummer WHERE Id = @KeyId", connection);
                 command.Parameters.Add(CreateParam("@KeyId", key, SqlDbType.NVarChar));
                 connection.Open();
                 if (command.ExecuteNonQuery() == 1)
@@ -155,9 +156,11 @@ namespace MauiEditor.Repository
             try
             {
                 connection = new SqlConnection(ConfigurationManager.ConnectionStrings["post"].ConnectionString);
-                SqlCommand command = new SqlCommand("SELECT Gruppe FROM Keynummer WHERE Id = @KeyId", connection);
-                SqlParameter param = new SqlParameter("@KeyId", SqlDbType.NVarChar);
-                param.Value = key;
+                SqlCommand command = new("SELECT Gruppe FROM Keynummer WHERE Id = @KeyId", connection);
+                SqlParameter param = new("@KeyId", SqlDbType.NVarChar)
+                {
+                    Value = key
+                };
                 command.Parameters.Add(param);
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
@@ -178,9 +181,11 @@ namespace MauiEditor.Repository
             try
             {
                 connection = new SqlConnection(ConfigurationManager.ConnectionStrings["post"].ConnectionString);
-                SqlCommand command = new SqlCommand("SELECT Id FROM Keynummer WHERE Gruppe = @Gruppe", connection);
-                SqlParameter param = new SqlParameter("@Gruppe", SqlDbType.NVarChar);
-                param.Value = gruppe;
+                SqlCommand command = new("SELECT Id FROM Keynummer WHERE Gruppe = @Gruppe", connection);
+                SqlParameter param = new("@Gruppe", SqlDbType.NVarChar)
+                {
+                    Value = gruppe
+                };
                 command.Parameters.Add(param);
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
