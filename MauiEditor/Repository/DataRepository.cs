@@ -142,7 +142,7 @@ namespace MauiEditor.Repository
                 try
                 {
                     string dataId = GetId(data.KomNr, data.Gruppe, data.Year);
-                    string gruppeId = KeyNummerRepository.GetId(data.Gruppe);
+                    string gruppeId = KeynummerRepository.GetId(data.Gruppe);
                     SqlCommand command = new SqlCommand("UPDATE Data SET Kom_nr = @KomNr, GruppeId = @Gruppe, Aarstal = @Year, Tal = @Num WHERE Id = @DataId", connection);
                     command.Parameters.Add(CreateParam("@DataId", dataId, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@KomNr", data.KomNr, SqlDbType.NVarChar));
