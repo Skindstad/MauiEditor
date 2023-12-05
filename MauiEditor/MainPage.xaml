@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MauiEditor.MainPage">
+             x:Class="MauiEditor.MainPage"
+             xmlns:viewmodel="clr-namespace:MauiEditor.ViewModel"
+             x:DataType="viewmodel:MainViewModel">
     <ContentPage.MenuBarItems>
         <MenuBarItem Text="Funtions">
             <MenuFlyoutItem Text="Skab ny data" Command="{Binding InsertDataCammand}"/>
@@ -9,8 +11,7 @@
             <MenuFlyoutSeparator/>
             <MenuFlyoutItem Text="Tøm Felterne" Command="{Binding ClearCommand}" />
             <MenuFlyoutSeparator/>
-            <MenuFlyoutItem Text="Luk"
-                            Command="{Binding ExitCommand}" />
+            <MenuFlyoutItem Text="Luk" Command="{Binding ExitCommand}" />
         </MenuBarItem>
     </ContentPage.MenuBarItems>
     <ScrollView>
@@ -29,23 +30,56 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
+                <Label Grid.Column="1" Text="{Binding Error}"/>
                 <Label Grid.Column="0" Text="Kommune"/>
                 <Label Grid.Column="2" Text="Gruppe"/>
                 <Label Grid.Column="4" Text="Aarstal"/>
-                <Entry Grid.Row="1" Grid.Column="0"/>
-                <Entry Grid.Row="1" Grid.Column="2"/>
-                <Entry Grid.Row="1" Grid.Column="4"/>
+                <Entry Grid.Row="1" Grid.Column="0" Text="{Binding Kommune}"/>
+                <Entry Grid.Row="1" Grid.Column="2" Text="{Binding Gruppe}"/>
+                <Entry Grid.Row="1" Grid.Column="4" Text="{Binding Year}"/>
 
                 <Button Grid.Row="1" Grid.Column="8" Text="Søg" Command="{Binding SearchCommand}"/>
 
-                <ListView Grid.Row="2" ItemsSource="{Binding Data}">
+                <ListView Grid.Row="2" ItemsSource="{Binding BindData}">
                     <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <TextCell Text="a" Detail="sadad"/>
+                        <DataTemplate x:DataType="{x:Type x:String}">
+                            <ViewCell>
+                                <Grid Padding="10">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0"
+                                       Text="{Binding .}"
+                                       FontAttributes="Bold" />
+                                    <Label Grid.Column="1"
+                                       Text="{Binding .}"
+                                       FontAttributes="Italic"/>
+                                    <Label Grid.Column="2"
+                                       Text="{Binding .}"
+                                       FontAttributes="Italic"/>
+                                    <Label Grid.Column="3"
+                                       Text="{Binding .}"
+                                       FontAttributes="Italic"/>
+                                    <Label Grid.Column="4"
+                                       Text="{Binding .}"
+                                       FontAttributes="Italic"/>
+                                    <Label Grid.Column="5"
+                                       Text="{Binding .}"
+                                       FontAttributes="Italic"
+                                       HorizontalOptions="End" />
+                                </Grid>
+                            </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-            
             </Grid>
         </VerticalStackLayout>
     </ScrollView>
