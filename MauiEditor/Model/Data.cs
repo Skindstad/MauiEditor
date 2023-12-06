@@ -64,7 +64,7 @@ namespace MauiEditor.Model
         {
             return DataId.CompareTo(data.DataId);
         }
-        private static readonly string[] validatedProperties = ["KomNr", "City", "Gruppe", "Year", "Tal"];
+        private static readonly string[] validatedProperties = { "KomNr", "City", "Gruppe", "Year", "Num" };
         public bool IsValid
         {
             get

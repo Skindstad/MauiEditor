@@ -40,7 +40,21 @@
                 <Button Grid.Row="1" Grid.Column="8" Text="Søg" Command="{Binding SearchCommand}"/>
 
                 <ListView Grid.Row="2" ItemsSource="{Binding DataList}">
-                    
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding DataId}" />
+                                    <Label Text="{Binding KomNr}" />
+                                    <Label Text="{Binding City}" />
+                                    <Label Text="{Binding Gruppe}" />
+                                    <Label Text="{Binding Year}" />
+                                    <Label Text="{Binding Num}" />
+                                    <!-- Add more labels for other properties as needed -->
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                 </ListView>
             </Grid>
         </VerticalStackLayout>

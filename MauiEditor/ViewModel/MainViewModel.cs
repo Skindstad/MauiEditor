@@ -19,32 +19,24 @@ namespace MauiEditor.ViewModel
         public RelayCommand KommuneCommand { get; private set; }
         public RelayCommand ClearCommand { get; private set; }
         public RelayCommand ExitCommand { get; private set; }
+        public ICommand SearchCommand { get; private set; }
 
+        //public static DataRepository repository = new DataRepository();
         public static DataRepository repository = new DataRepository();
 
         public MainViewModel()
         {
-            BindData = new ObservableCollection<Data>(repository);
+            SearchCommand = new Command(p => Search()/*, p => CanSearch()*/);
+            DataList = new ObservableCollection<Data>(repository);
         }
 
         [ObservableProperty]
-        ObservableCollection<Data> bindData;
-
-        /*    [ObservableProperty]
-           string text;
-
-          [ICommand] 
-           void Add()
-           {
-               if (string.IsNullOrEmpty(Text)) return;
+        ObservableCollection<Data> dataList;
 
 
-               items.Add(text);
-               Text = string.Empty;
-           }*/
             // Entry
             [ObservableProperty]
-             string kommune;
+             string city;
 
              [ObservableProperty]
              string gruppe;
@@ -53,38 +45,31 @@ namespace MauiEditor.ViewModel
              string year;
 
 
-        // Labels
+            [ObservableProperty]
+            string dataId;
+
             [ObservableProperty]
             string komNr;
 
             [ObservableProperty]
-            string dataID;
-
-            [ObservableProperty]
             string num;
 
-            [ObservableProperty]
-            string error;
+        private void Search()
+                 {
+                    repository.Search(City, Gruppe, Year);
+                    DataList = new ObservableCollection<Data>(repository);
 
-        public ICommand SearchCommand =>
-                 new Command(SearchData);
+                     City = string.Empty;
+                     Gruppe = string.Empty;
+                     Year = string.Empty;
+                 }
 
-             private void SearchData(object obj)
-             {
-            if (string.IsNullOrWhiteSpace(Kommune) && string.IsNullOrWhiteSpace(Gruppe) && string.IsNullOrWhiteSpace(Year)) return;
-            try
-            {
-                repository.Search(Kommune, Gruppe, Year);
-                BindData = new ObservableCollection<Data>(repository);
-            } catch (Exception ex)
-            {
-                Error = ex.ToString();
-            }
 
-                 Kommune = string.Empty;
-                 Gruppe = string.Empty;
-                 Year = string.Empty;
-             }
-
+        /*private bool CanSearch()
+        {
+          
+            return City.Length > 0 ||
+                Gruppe.Length > 0 || Year.Length > 0;
+        }*/
     }
 }
