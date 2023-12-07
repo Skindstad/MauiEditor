@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using MauiEditor.Model;
 using MauiEditor.Repository;
+using MauiEditor.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,19 +15,10 @@ namespace MauiEditor.ViewModel
 {
    public partial class MainViewModel: ObservableObject
     {
-
-       public RelayCommand InsertDataCammand { get; private set; }
-        public RelayCommand KommuneCommand { get; private set; }
-        public RelayCommand ClearCommand { get; private set; }
-        public RelayCommand ExitCommand { get; private set; }
-        public ICommand SearchCommand { get; private set; }
-
-        //public static DataRepository repository = new DataRepository();
-        public static DataRepository repository = new DataRepository();
+        public static DataRepository repository = [];
 
         public MainViewModel()
         {
-            SearchCommand = new Command(p => Search()/*, p => CanSearch()*/);
             DataList = new ObservableCollection<Data>(repository);
         }
 
@@ -54,7 +46,8 @@ namespace MauiEditor.ViewModel
             [ObservableProperty]
             string num;
 
-        private void Search()
+        [ICommand]
+        void Search()
                  {
                     repository.Search(City, Gruppe, Year);
                     DataList = new ObservableCollection<Data>(repository);
@@ -64,12 +57,40 @@ namespace MauiEditor.ViewModel
                      Year = string.Empty;
                  }
 
-
         /*private bool CanSearch()
         {
           
             return City.Length > 0 ||
                 Gruppe.Length > 0 || Year.Length > 0;
         }*/
+
+        [ICommand]
+        async Task Insert()
+        {
+            await Shell.Current.GoToAsync(nameof(InsertDataView));
+        }
+
+        [ICommand]
+        async Task Kommune()
+        {
+            await Shell.Current.GoToAsync(nameof(KommuneManagerView));
+        }
+
+        [ICommand]
+        void Clear() 
+        {
+            if (string.IsNullOrWhiteSpace(City) || string.IsNullOrWhiteSpace(Gruppe) || string.IsNullOrWhiteSpace(Year)) return;
+            City = string.Empty;
+            Gruppe = string.Empty;
+            Year = string.Empty;
+        }
+
+        [ICommand]
+        void Exit()
+        {
+
+        }
+
+
     }
 }

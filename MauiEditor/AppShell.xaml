@@ -13,19 +13,4 @@
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 
-    <ShellContent
-        Title="Skab data"
-        ContentTemplate="{DataTemplate mynamespace:InsertDataView}"
-        Route="InsertData" />
-
-    <ShellContent
-        Title="Kommune"
-        ContentTemplate="{DataTemplate mynamespace:KommuneManagerView}"
-        Route="Kommune" />
-
-    <ShellContent
-        Title="Opdater data"
-        ContentTemplate="{DataTemplate mynamespace:UpdateDataView}"
-        Route="UpdateData" />
-
 </Shell>

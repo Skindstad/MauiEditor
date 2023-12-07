@@ -1,9 +1,12 @@
+using MauiEditor.ViewModel;
+
 namespace MauiEditor.View;
 
 public partial class InsertDataView : ContentPage
 {
-	public InsertDataView()
+	public InsertDataView(InsertViewModel vm)
 	{
 		InitializeComponent();
+		BindingContext = vm;
 	}
 }

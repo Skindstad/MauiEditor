@@ -6,7 +6,7 @@
              x:DataType="viewmodel:MainViewModel">
     <ContentPage.MenuBarItems>
         <MenuBarItem Text="Funtions">
-            <MenuFlyoutItem Text="Skab ny data" Command="{Binding InsertDataCammand}"/>
+            <MenuFlyoutItem Text="Skab ny data" Command="{Binding InsertCommand}"/>
             <MenuFlyoutItem Text="Manage Kommuner" Command="{Binding KommuneCommand}" />
             <MenuFlyoutSeparator/>
             <MenuFlyoutItem Text="Tøm Felterne" Command="{Binding ClearCommand}" />

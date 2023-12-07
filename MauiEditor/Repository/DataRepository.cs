@@ -66,13 +66,11 @@ namespace MauiEditor.Repository
             {
                 try
                 {
-                    string id = CountID();
-                    int to = int.Parse(id);
-                    id = (id + 1).ToString();
+                    string dataId = GetId(data.KomNr, data.Gruppe, data.Year);
                     string gruppeId = KeynummerRepository.GetId(data.Gruppe);
                     SqlCommand sqlCommand = new("INSERT INTO Data (Id, Kom_nr, GruppeID, Aarstal, Tal) VALUES (@Id, @KomNr, @Gruppe, @Year, @Num)", connection);
                     SqlCommand command = sqlCommand;
-                    command.Parameters.Add(CreateParam("@Id", id, SqlDbType.NVarChar));
+                    command.Parameters.Add(CreateParam("@Id", dataId, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@KomNr", data.KomNr, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@Gruppe", gruppeId, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@Year", data.Year, SqlDbType.NVarChar));
