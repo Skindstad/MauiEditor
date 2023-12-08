@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MauiEditor.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -30,5 +31,9 @@ namespace MauiEditor.ViewModel
             Items.Add(text);
             Text = string.Empty;
         }
+
+
+        
+
     }
 }

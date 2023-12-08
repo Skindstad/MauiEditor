@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using MauiEditor.View;
+using MauiEditor.ViewModel;
+using Microsoft.Extensions.Logging;
 
 namespace MauiEditor
 {
@@ -18,6 +20,10 @@ namespace MauiEditor
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+            // Jesper
+            // "creates" page when opened and "destroy" when closed
+            builder.Services.AddTransient<UpdateDataView>();  
+            // builder.Services.AddTransient<UpdateDataViewModel>();
 
             return builder.Build();
         }

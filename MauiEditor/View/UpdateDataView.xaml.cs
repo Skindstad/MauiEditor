@@ -1,11 +1,27 @@
+using MauiEditor.Model;
+using MauiEditor.ViewModel;
+
 namespace MauiEditor.View;
 
 public partial class UpdateDataView : ContentPage
 {
-	public UpdateDataView()
+    private UpdateDataViewModel viewModel = new UpdateDataViewModel();
+    /*
+	public UpdateDataView(UpdateDataViewModel contact)
 	{
-		InitializeComponent();
+        // referance UpdateDataViewModel here
+        InitializeComponent();
+        // BindingContext = contact;
+        BindingContext = viewModel;
 	}
+    */
+    public UpdateDataView()
+    {
+        // referance UpdateDataViewModel here
+        InitializeComponent();
+        // BindingContext = contact;
+        BindingContext = viewModel;
+    }
 
     private void OnKomIdTextChanged(object sender, TextChangedEventArgs e)
     {

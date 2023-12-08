@@ -34,75 +34,77 @@
                 <ColumnDefinition Width="70"/>
             </Grid.ColumnDefinitions>
             <Label Text="Kom_id"
-           FontSize="18"
-           Grid.Row="0"
-           Grid.Column="0"
-           VerticalOptions="Center"
-           HorizontalOptions="Center"/>
+                   FontSize="18"
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"/>
             <Entry x:Name="Kom_id_Entry"
-           Placeholder="Enter Text"
-           TextChanged="OnKomIdTextChanged"
-           Grid.Column="0"
-           Grid.Row="1"/>
+                   Placeholder="Enter Text"
+                   Text="{Binding Path=Kom_id}"
+                   TextChanged="OnKomIdTextChanged"
+                   Grid.Column="0"
+                   Grid.Row="1"/>
             <Label Text="City"
-           FontSize="18"
-           Grid.Row="2"
-           Grid.Column="0"
-           VerticalOptions="Center"
-           HorizontalOptions="Center"/>
+                   FontSize="18"
+                   Grid.Row="2"
+                   Grid.Column="0"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"/>
             <Entry x:Name="City_Entry"
-           Placeholder="Enter Text"
-           TextChanged="OnCityTextChanged"
-           Grid.Column="0"
-           Grid.Row="3"/>
+                   Placeholder="Enter Text"
+                   Text="{Binding Path=City}"
+                   TextChanged="OnCityTextChanged"
+                   Grid.Column="0"
+                   Grid.Row="3"/>
             <Label Text="Gruppe"
-           FontSize="18"
-           Grid.Row="4"
-           Grid.Column="0"
-           VerticalOptions="Center"
-           HorizontalOptions="Center"/>
+                   FontSize="18"
+                   Grid.Row="4"
+                   Grid.Column="0"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"/>
             <Entry x:Name="Gruppe_Entry"
-           Placeholder="Enter Text"
-           TextChanged="OnGruppeTextChanged"
-           Grid.Column="0"
-           Grid.Row="5"/>
+                   Placeholder="Enter Text"
+                   Text="{Binding Path=Gruppe}"
+                   TextChanged="OnGruppeTextChanged"
+                   Grid.Column="0"
+                   Grid.Row="5"/>
             <Label Text="Aarstal"
-           FontSize="18"
-           Grid.Row="6"
-           Grid.Column="0"
-           VerticalOptions="Center"
-           HorizontalOptions="Center"/>
+                   FontSize="18"
+                   Grid.Row="6"
+                   Grid.Column="0"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"/>
             <Entry x:Name="Aarstal_Entry"
-           Placeholder="Enter Text"
-           TextChanged="OnAarstalTextChanged"
-           Grid.Column="0"
-           Grid.Row="7"/>
+                   Placeholder="Enter Text"
+                   Text="{Binding Path=Aarstal}"
+                   TextChanged="OnAarstalTextChanged"
+                   Grid.Column="0"
+                   Grid.Row="7"/>
             <Label Text="Tal"
-           FontSize="18"
-           Grid.Row="8"
-           Grid.Column="0"
-           VerticalOptions="Center"
-           HorizontalOptions="Center"/>
+                   FontSize="18"
+                   Grid.Row="8"
+                   Grid.Column="0"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"/>
             <Entry x:Name="Tal_Entry"
-           Placeholder="Enter Text"
-           TextChanged="OnTalTextChanged"
-           Grid.Column="0"
-           Grid.Row="9"/>
+                   Placeholder="Enter Text"
+                   Text="{Binding Path=Tal}"
+                   TextChanged="OnTalTextChanged"
+                   Grid.Column="0"
+                   Grid.Row="9"/>
             <Button Grid.Row="10"
-            Grid.Column="0"
-            HorizontalOptions="Center"
-            VerticalOptions="Center"
-            Text="UpdateButton"
-            Clicked="UpdateButtonClicked"/>
+                    Grid.Column="0"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Text="UpdateButton"
+                    Clicked="UpdateButtonClicked"/>
             <Button Grid.Row="10"
-            Grid.Column="2"
-            HorizontalOptions="Center"
-            VerticalOptions="Center"
-            Text="Back"
-            Clicked="BackButtonClicked"/>
+                    Grid.Column="2"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Text="Back"
+                    Clicked="BackButtonClicked"/>
         </Grid>
-
-
-
     </VerticalStackLayout>
 </ContentPage>

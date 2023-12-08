@@ -1,8 +1,10 @@
-﻿namespace MauiEditor
+﻿using MauiEditor.View;
+using MauiEditor.ViewModel;
+
+namespace MauiEditor
 {
     public partial class MainPage : ContentPage
     {
-        
 
         public MainPage()
         {
@@ -17,6 +19,16 @@
         private void OnKomIdTextChanged(object sender, TextChangedEventArgs e)
         {
 
+        }
+
+        private async void UpdateDataView_Clicked(object sender, EventArgs e) // jesper, goes to updateDataView page
+        {
+            var navigationParameter = new Dictionary<string, object>()
+            {
+                {nameof(UpdateDataView), new UpdateDataView() }
+            };
+
+            await Shell.Current.GoToAsync(nameof(UpdateDataView), navigationParameter);
         }
 
         /* private void OnCounterClicked(object sender, EventArgs e)
