@@ -38,30 +38,47 @@
 
                 <Button Grid.Row="1" Grid.Column="8" Text="Søg" Command="{Binding SearchCommand}"/>
 
-                <Label Grid.Row="2" Grid.Column="0" Text="Data Id:"/>
-                <Label Grid.Row="2" Grid.Column="1" Text="Kom_nr:"/>
-                <Label Grid.Row="2" Grid.Column="2" Text="Kommune:"/>
-                <Label Grid.Row="2" Grid.Column="3" Text="Gruppe:"/>
-                <Label Grid.Row="2" Grid.Column="4" Text="Aarstal:"/>
-                <Label Grid.Row="2" Grid.Column="5" Text="Tal:"/>
+            
+            <ListView Grid.Row="2" Margin="10" Grid.Column="0" Grid.ColumnSpan="6" ItemsSource="{Binding DataList}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
 
-                <ListView Grid.Row="2" Margin="10" Grid.Column="0" Grid.ColumnSpan="6" ItemsSource="{Binding DataList}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <StackLayout Margin="10" Orientation="Horizontal">
-                                    <Label Padding="0,0,200,0" Text="{Binding DataId}" />
-                                    <Label Padding="200,0,200,0" Text="{Binding KomNr}" />
-                                    <Label Padding="200,0,200,0" Text="{Binding City}" />
-                                    <Label Padding="200,0,200,0" Text="{Binding Gruppe}" />
-                                    <Label Padding="200,0,200,0" Text="{Binding Year}" />
-                                    <Label Padding="200,0,0,0" Text="{Binding Num}" />
-                                </StackLayout>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
+                                <!-- Labels within the grid cells -->
+                                <Label Grid.Column="0" Text="Data Id: "/>
+                                <Label Grid.Column="1" Text="{Binding DataId}" />
+                                <Label Grid.Column="2" Text="Kom_nr: "/>
+                                <Label Grid.Column="3" Text="{Binding KomNr}" />
+                                <Label Grid.Column="4" Text="Kommune: "/>
+                                <Label Grid.Column="5" Text="{Binding City}" />
+                                <Label  Grid.Column="6" Text="Gruppe: "/>
+                                <Label Grid.Column="7" Text="{Binding Gruppe}" />
+                                <Label Grid.Column="8" Text="Aarstal: "/>
+                                <Label Grid.Column="9" Text="{Binding Year}" />
+                                <Label Grid.Column="10" Text="Tal:"/>
+                                <Label Grid.Column="11" Text="{Binding Num}" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </Grid>
     </ScrollView>
 
 </ContentPage>
