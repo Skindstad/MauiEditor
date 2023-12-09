@@ -31,7 +31,8 @@
             <Button Grid.Row="2" Grid.Column="3" Text="Clear" Command="{Binding ClearCommand}"/>
 
 
-            <ListView Grid.Row="3" Margin="10" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Info}">
+            <ListView Grid.Row="3" Margin="10" Grid.Column="0" Grid.ColumnSpan="2" SelectionMode="Single"
+                      SelectedItem="{Binding SelectedModel, Mode=TwoWay}" ItemsSource="{Binding Info}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

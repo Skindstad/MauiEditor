@@ -17,9 +17,12 @@ namespace MauiEditor.ViewModel
     public partial class KommuneViewModel : ObservableObject
     {
         private KommuneRepository repository = [];
+        private Kommune model = new Kommune();
 
         public KommuneViewModel()
         {
+            repository.RepositoryChanged += ModelChanged;
+            Search();
             Info = new ObservableCollection<Kommune>(repository);
         }
 
@@ -34,16 +37,44 @@ namespace MauiEditor.ViewModel
         string city;
 
 
+        public void ModelChanged(object sender, DbEventArgs e)
+        {
+            if (e.Operation != DbOperation.SELECT)
+            {
+                Clear();
+            }
+            Info = new ObservableCollection<Kommune>(repository);
+        }
+
         [ICommand]
         async Task GoBack()
         {
             await Shell.Current.GoToAsync("..");
         }
 
+        public Kommune SelectedModel
+        {
+            get => model;
+            set
+            {
+                model = value;
+                OnPropertyChanged(nameof(KomNr));
+                OnPropertyChanged(nameof(City));
+
+                // Set the values in the Entry controls
+                KomNr = model?.KomNr;
+                City = model?.City;
+
+                OnPropertyChanged(nameof(SelectedModel));
+            }
+        }
+
         [ICommand]
         void Clear()
         {
-            
+            KomNr = string.Empty;
+            City = string.Empty;
+            Search();
         }
 
         [ICommand]
@@ -51,9 +82,6 @@ namespace MauiEditor.ViewModel
         {
             repository.Search(KomNr, City);
             Info = new ObservableCollection<Kommune>(repository);
-
-            komNr = string.Empty;
-            City = string.Empty;
         }
 
         [ICommand]
