@@ -55,6 +55,6 @@ public partial class UpdateDataView : ContentPage
 
     private void BackButtonClicked(object sender, EventArgs e)
     {
-
+        // viewModel.OnClose();
     }
 }

@@ -98,13 +98,15 @@
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
                     Text="UpdateButton"
-                    Clicked="UpdateButtonClicked"/>
+                    Clicked="UpdateButtonClicked"
+                    Command="{Binding Path=UpdateCommand}"/>
             <Button Grid.Row="10"
                     Grid.Column="2"
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
                     Text="Back"
-                    Clicked="BackButtonClicked"/>
+                    Clicked="BackButtonClicked"
+                    Command="{Binding Path=CloseCommand}"/>
         </Grid>
     </VerticalStackLayout>
 </ContentPage>

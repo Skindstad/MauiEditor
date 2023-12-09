@@ -31,6 +31,7 @@ namespace MauiEditor
             await Shell.Current.GoToAsync(nameof(UpdateDataView), navigationParameter);
         }
 
+
         /* private void OnCounterClicked(object sender, EventArgs e)
          {
              count++;
