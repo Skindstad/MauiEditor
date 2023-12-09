@@ -5,11 +5,54 @@
              xmlns:viewmodel="clr-namespace:MauiEditor.ViewModel"
              x:DataType="viewmodel:KommuneViewModel"
              Title="KommuneManagerView">
-    <VerticalStackLayout>
-        <Label 
-            Text="Kommune Manager"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <Button Text="Go Back" Command="{Binding GoBackCommand}"/>
-    </VerticalStackLayout>
+
+    <ScrollView>
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Text="Kom Nr."/>
+            <Label Grid.Column="4" Text="By navn"/>
+            <Entry Grid.Row="1" Grid.Column="0" Text="{Binding KomNr}"/>
+            <Entry Grid.Row="1" Grid.Column="4" Text="{Binding City}"/>
+
+            <Button Grid.Row="2" Grid.Column="0" Text="Search" Command="{Binding SearchCommand}"/>
+            <Button Grid.Row="2" Grid.Column="1" Text="Insert" Command="{Binding AddCommand}"/>
+            <Button Grid.Row="2" Grid.Column="2" Text="Update" Command="{Binding UpdateCommand}"/>
+            <Button Grid.Row="2" Grid.Column="3" Text="Clear" Command="{Binding ClearCommand}"/>
+
+
+            <ListView Grid.Row="3" Margin="10" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Info}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Labels within the grid cells -->
+                                <Label Grid.Column="0" Text="Kom Nr:  "/>
+                                <Label Grid.Column="1" Text="{Binding KomNr}" />
+                                <Label Grid.Column="2" Text="By: "/>
+                                <Label Grid.Column="3" Text="{Binding City}" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        </ScrollView>
 </ContentPage>
