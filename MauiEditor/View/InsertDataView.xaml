@@ -6,10 +6,37 @@
              x:DataType="viewmodel:InsertViewModel"
              Title="InsertDataView">
     <VerticalStackLayout>
-        <Label 
-            Text="Insert"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <Button Text="Go Back" Command="{Binding GoBackCommand}"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition />
+                <RowDefinition Height="30"/>
+                <RowDefinition />
+                <RowDefinition Height="30" />
+                <RowDefinition />
+                <RowDefinition Height="30" />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" FontSize="20" Text="Kom_nr:"/>
+            <Entry Grid.Row="1" Text="{Binding KomNr}" Margin="0,0,150,40"  Placeholder="Kom_nr"/>
+
+            <Label Grid.Row="2" FontSize="20" Text="Gruppe:"/>
+            <Entry Grid.Row="3" Text="{Binding Gruppe}" Margin="0,0,150,40"  Placeholder="Gruppe"/>
+
+            <Label Grid.Row="4" FontSize="20" Text="Årstal:"/>
+            <Entry Grid.Row="5" Text="{Binding Year}" Margin="0,0,150,40" Placeholder="Årstal"/>
+
+            <Label Grid.Row="6" FontSize="20" Text="Tal:"/>
+            <Entry Grid.Row="7" Text="{Binding Num}" Margin="0,0,150,40" Placeholder="Tal"/>
+
+            <Button Grid.Row="8" Text="Go Back" Command="{Binding GoBackCommand}" WidthRequest="150" HorizontalOptions="Start"/>
+            <Button Grid.Row="8" Grid.Column="1" Text="Skab" Command="{Binding CreateCommand}" WidthRequest="150" HorizontalOptions="End"/>
+        </Grid>
     </VerticalStackLayout>
 </ContentPage>
