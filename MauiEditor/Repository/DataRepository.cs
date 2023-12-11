@@ -62,15 +62,13 @@ namespace MauiEditor.Repository
         public void Add(Data data)
         {
             string error = "";
-            if (data.IsValid)
+            if (data.KomNr.Length == 3 && data.Year.Length == 4 && data.Gruppe.Length > 0 && data.Num.Length > 0)
             {
                 try
                 {
-                    string dataId = GetId(data.KomNr, data.Gruppe, data.Year);
                     string gruppeId = KeynummerRepository.GetId(data.Gruppe);
-                    SqlCommand sqlCommand = new("INSERT INTO Data (Id, Kom_nr, GruppeID, Aarstal, Tal) VALUES (@Id, @KomNr, @Gruppe, @Year, @Num)", connection);
+                    SqlCommand sqlCommand = new("INSERT INTO Data (Kom_nr, GruppeID, Aarstal, Tal) VALUES (@KomNr, @Gruppe, @Year, @Num)", connection);
                     SqlCommand command = sqlCommand;
-                    command.Parameters.Add(CreateParam("@Id", dataId, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@KomNr", data.KomNr, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@Gruppe", gruppeId, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@Year", data.Year, SqlDbType.NVarChar));
@@ -96,7 +94,8 @@ namespace MauiEditor.Repository
                 }
             }
             else error = "Illegal value for KomNr";
-            throw new DbException("Error in Data repositiory: " + error);
+            Console.WriteLine(error);
+           // throw new DbException("Error in Data repositiory: " + error);
         }
 
         public void Update(string id, string komNr, string city, string gruppe, string year, string num)
