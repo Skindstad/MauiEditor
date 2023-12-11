@@ -8,9 +8,12 @@ namespace MauiEditor
         {
             InitializeComponent();
 
+
             // Jesper
             Routing.RegisterRoute(nameof(UpdateDataView), typeof(UpdateDataView));
-             
+            Routing.RegisterRoute(nameof(InsertDataView), typeof(InsertDataView));
+            Routing.RegisterRoute(nameof(KommuneManagerView), typeof(KommuneManagerView));
+
         }
     }
 }
