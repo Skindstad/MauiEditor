@@ -1,9 +1,11 @@
+ALTER TABLE Data
+ADD Id INT IDENTITY(1,1) PRIMARY KEY;
+
 Alter table Data add foreign key (Kom_nr) references Kommune;
 Alter table Data add foreign key (GruppeId) references Keynummer;
 Alter table Data add foreign key (Aarstal) references Aarstal;
 
-ALTER TABLE Data
-ADD Id INT IDENTITY(1,1) PRIMARY KEY;
+
 
 Select Data.Id, Data.Kom_nr, City, Gruppe, Aarstal, tal
 From Data Join Keynummer on Data.GruppeId = Keynummer.Id
