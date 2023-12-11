@@ -84,7 +84,7 @@ namespace MauiEditor.Repository
                 }
             }
             else error = "Illegal value for Kommune";
-            throw new DbException("Error in Kommune repositiory: " + error);
+            //throw new DbException("Error in Kommune repositiory: " + error);
         }
 
         public void Update(string komNr, string city)
@@ -122,7 +122,7 @@ namespace MauiEditor.Repository
                 }
             }
             else error = "Illegal value for city";
-            throw new DbException("Error in Kommune repositiory: " + error);
+            //throw new DbException("Error in Kommune repositiory: " + error);
         }
 
         public void Remove(string komNr)
