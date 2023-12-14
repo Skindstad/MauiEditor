@@ -16,17 +16,29 @@ namespace MauiEditor.ViewModel
    public partial class MainViewModel: ObservableObject
     {
         public static DataRepository repository = [];
+        public static KeynummerRepository keynummerRepository = [];
+        public static KommuneRepository kommuneRepository = [];
+        public static AarstalRepository yearRepository = [];
+
+
 
         public MainViewModel()
         {
             DataList = new ObservableCollection<Data>(repository);
+            LoadCitys();
+            LoadGruppes();
+            LoadYears();
         }
 
         [ObservableProperty]
         ObservableCollection<Data> dataList;
 
 
-            // Entry
+       // [ObservableProperty]
+       // ObservableCollection<string> gruppeList;
+
+
+        // Items
             [ObservableProperty]
              string city;
 
@@ -46,23 +58,36 @@ namespace MauiEditor.ViewModel
             [ObservableProperty]
             string num;
 
+        // Picker
+            [ObservableProperty]
+            List<string> kommuneList;
+
+            [ObservableProperty]
+            string selectedKommune;
+
+            [ObservableProperty]
+            List<string> gruppeList;
+
+            [ObservableProperty]
+            string selectedGruppe;
+
+            [ObservableProperty]
+            List<string> yearList;
+
+            [ObservableProperty]
+            string selectedYear;
+
+
+
         [ICommand]
         void Search()
                  {
-                    repository.Search(City, Gruppe, Year);
-                    DataList = new ObservableCollection<Data>(repository);
+                    repository.Search(selectedKommune, selectedGruppe, selectedYear);
+            DataList = new ObservableCollection<Data>(repository);
 
-                     City = string.Empty;
-                     Gruppe = string.Empty;
-                     Year = string.Empty;
                  }
 
-        /*private bool CanSearch()
-        {
-          
-            return City.Length > 0 ||
-                Gruppe.Length > 0 || Year.Length > 0;
-        }*/
+        
 
         [ICommand]
         async Task Insert()
@@ -91,6 +116,18 @@ namespace MauiEditor.ViewModel
 
         }
 
+        private void LoadCitys()
+        {
+          kommuneList = kommuneRepository.GetCitys();
+        }
+        private void LoadGruppes()
+        {
+            gruppeList = keynummerRepository.GetGruppers();
+        }
+        private void LoadYears()
+        {
+            yearList = yearRepository.GetYears();
+        }
 
     }
 }

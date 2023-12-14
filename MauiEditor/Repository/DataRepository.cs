@@ -62,40 +62,45 @@ namespace MauiEditor.Repository
         public void Add(Data data)
         {
             string error = "";
-            if (data.KomNr.Length == 3 && data.Year.Length == 4 && data.Gruppe.Length > 0 && data.Num.Length > 0)
+            if (data.City.Length > 0 && data.Year.Length == 4 && data.Gruppe.Length > 0 && data.Num.Length >= 0)
             {
-                try
+
+                if (GetIdWithCity(data.City, data.Gruppe, data.Year) == null)
                 {
-                    string gruppeId = KeynummerRepository.GetId(data.Gruppe);
-                    SqlCommand sqlCommand = new("INSERT INTO Data (Kom_nr, GruppeID, Aarstal, Tal) VALUES (@KomNr, @Gruppe, @Year, @Num)", connection);
-                    SqlCommand command = sqlCommand;
-                    command.Parameters.Add(CreateParam("@KomNr", data.KomNr, SqlDbType.NVarChar));
-                    command.Parameters.Add(CreateParam("@Gruppe", gruppeId, SqlDbType.NVarChar));
-                    command.Parameters.Add(CreateParam("@Year", data.Year, SqlDbType.NVarChar));
-                    command.Parameters.Add(CreateParam("@Num", data.Num, SqlDbType.NVarChar));
-                    connection.Open();
-                    if (command.ExecuteNonQuery() == 1)
+                    try
                     {
-                        data.City = KommuneRepository.GetCity(data.KomNr);
-                        list.Add(data);
-                        list.Sort();
-                        OnChanged(DbOperation.INSERT, DbModeltype.Data);
-                        return;
+                        string komNr = KommuneRepository.GetKomNr(data.City);
+                        string gruppeId = KeynummerRepository.GetId(data.Gruppe);
+                        SqlCommand sqlCommand = new("INSERT INTO Data (Kom_nr, GruppeID, Aarstal, Tal) VALUES (@KomNr, @Gruppe, @Year, @Num)", connection);
+                        SqlCommand command = sqlCommand;
+                        command.Parameters.Add(CreateParam("@KomNr", komNr, SqlDbType.NVarChar));
+                        command.Parameters.Add(CreateParam("@Gruppe", gruppeId, SqlDbType.NVarChar));
+                        command.Parameters.Add(CreateParam("@Year", data.Year, SqlDbType.NVarChar));
+                        command.Parameters.Add(CreateParam("@Num", data.Num, SqlDbType.NVarChar));
+                        connection.Open();
+                        if (command.ExecuteNonQuery() == 1)
+                        {
+                            data.City = KommuneRepository.GetCity(data.KomNr);
+                            list.Add(data);
+                            list.Sort();
+                            OnChanged(DbOperation.INSERT, DbModeltype.Data);
+                            return;
+                        }
+                        error = string.Format("KomNr could not be inserted in the database");
                     }
-                    error = string.Format("KomNr could not be inserted in the database");
+                    catch (Exception ex)
+                    {
+                        error = ex.Message;
+                    }
+                    finally
+                    {
+                        if (connection != null && connection.State == ConnectionState.Open) connection.Close();
+                    }
                 }
-                catch (Exception ex)
-                {
-                    error = ex.Message;
                 }
-                finally
-                {
-                    if (connection != null && connection.State == ConnectionState.Open) connection.Close();
-                }
-            }
-            else error = "Illegal value for KomNr";
-            Console.WriteLine(error);
-           // throw new DbException("Error in Data repositiory: " + error);
+                else error = "Illegal value for KomNr";
+                Console.WriteLine(error);
+                // throw new DbException("Error in Data repositiory: " + error);
         }
 
         public void Update(string id, string komNr, string city, string gruppe, string year, string num)
@@ -217,14 +222,25 @@ namespace MauiEditor.Repository
             }
             return "";
         }
-        public static string CountID()
+        public static string? GetIdWithCity(string city, string gruppe, string year)
         {
             SqlConnection connection = null;
             try
             {
+                string komNr = KommuneRepository.GetKomNr(city);
+                string GruppeID = KeynummerRepository.GetId(gruppe);
                 connection = new SqlConnection(ConfigurationManager.ConnectionStrings["post"].ConnectionString);
-                SqlCommand sqlCommand = new("SELECT COUNT(Id )FROM Data", connection);
+                SqlCommand sqlCommand = new("SELECT Id FROM Data WHERE GruppeId = @Gruppe AND Kom_Nr = @KomNr AND Aarstal = @Year", connection);
                 SqlCommand command = sqlCommand;
+                SqlParameter param = new("@Gruppe", SqlDbType.NVarChar);
+                SqlParameter param2 = new("@KomNr", SqlDbType.NVarChar);
+                SqlParameter param3 = new("@Year", SqlDbType.NVarChar);
+                param.Value = GruppeID;
+                param2.Value = komNr;
+                param3.Value = year;
+                command.Parameters.Add(param);
+                command.Parameters.Add(param2);
+                command.Parameters.Add(param3);
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.Read()) return reader[0].ToString();
@@ -236,7 +252,7 @@ namespace MauiEditor.Repository
             {
                 if (connection != null && connection.State == ConnectionState.Open) connection.Close();
             }
-            return "";
+            return null;
         }
     }
 }

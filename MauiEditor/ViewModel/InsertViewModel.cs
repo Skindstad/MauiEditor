@@ -14,36 +14,51 @@ namespace MauiEditor.ViewModel
     public partial class InsertViewModel : ObservableObject
     {
         public static DataRepository repository = [];
+        public static KeynummerRepository keynummerRepository = [];
+        public static KommuneRepository kommuneRepository = [];
+        public static AarstalRepository yearRepository = [];
 
         public InsertViewModel()
         {
-          
+          LoadCitys();
+          LoadGruppes();
+          LoadYears();
         }
-
-        // Entry
-        [ObservableProperty]
-        string gruppe;
-
-        [ObservableProperty]
-        string year;
-
-        [ObservableProperty]
-        string komNr;
 
         [ObservableProperty]
         string num;
+
+        // Picker
+        [ObservableProperty]
+        List<string> kommuneList;
+
+        [ObservableProperty]
+        string selectedKommune;
+
+        [ObservableProperty]
+        List<string> gruppeList;
+
+        [ObservableProperty]
+        string selectedGruppe;
+
+        [ObservableProperty]
+        List<string> yearList;
+
+        [ObservableProperty]
+        string selectedYear;
+
 
 
         [ICommand]
         void Create()
         {
-           Data data = new Data("", KomNr, "", Gruppe, Year, Num);
+           Data data = new Data("", "", selectedKommune, selectedGruppe, selectedYear, Num);
             repository.Add(data);
 
 
-            KomNr = string.Empty;
-            Gruppe = string.Empty;
-            Year = string.Empty;
+            //KomNr = string.Empty;
+            //Gruppe = string.Empty;
+            //Year = string.Empty;
             Num = string.Empty;
         }
 
@@ -52,6 +67,20 @@ namespace MauiEditor.ViewModel
         async Task GoBack()
         {
             await Shell.Current.GoToAsync("..");
+        }
+
+
+        private void LoadCitys()
+        {
+            kommuneList = kommuneRepository.GetCitys();
+        }
+        private void LoadGruppes()
+        {
+            gruppeList = keynummerRepository.GetGruppers();
+        }
+        private void LoadYears()
+        {
+            yearList = yearRepository.GetYears();
         }
     }
 }

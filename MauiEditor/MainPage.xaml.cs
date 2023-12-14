@@ -11,6 +11,8 @@ namespace MauiEditor
             InitializeComponent();
             BindingContext = vm;
         }
+
+
     }
 
 }
