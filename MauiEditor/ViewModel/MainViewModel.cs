@@ -113,7 +113,7 @@ namespace MauiEditor.ViewModel
         [ICommand]
         void Exit()
         {
-
+            System.Environment.Exit(0);
         }
 
         private void LoadCitys()
