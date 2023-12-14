@@ -5,10 +5,11 @@ namespace MauiEditor
 {
     public partial class MainPage : ContentPage
     {
-
-        public MainPage()
+        
+        public MainPage(MainViewModel vm)
         {
             InitializeComponent();
+            BindingContext = vm;
         }
 
         private void OnCityTextChanged(object sender, TextChangedEventArgs e)

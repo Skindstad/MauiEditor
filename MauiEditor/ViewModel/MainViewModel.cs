@@ -46,6 +46,7 @@ namespace MauiEditor.ViewModel
             [ObservableProperty]
             string num;
 
+        
         [ICommand]
         void Search()
                  {
@@ -56,6 +57,7 @@ namespace MauiEditor.ViewModel
                      Gruppe = string.Empty;
                      Year = string.Empty;
                  }
+
 
         /*private bool CanSearch()
         {
@@ -74,6 +76,12 @@ namespace MauiEditor.ViewModel
         async Task Kommune()
         {
             await Shell.Current.GoToAsync(nameof(KommuneManagerView));
+        }
+
+        [ICommand]
+        async Task UpdateData()
+        {
+            await Shell.Current.GoToAsync(nameof(UpdateDataView));
         }
 
         [ICommand]

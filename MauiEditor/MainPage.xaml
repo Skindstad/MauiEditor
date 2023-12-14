@@ -8,7 +8,7 @@
         <MenuBarItem Text="Funtions">
             <MenuFlyoutItem Text="Skab ny data" Command="{Binding InsertCommand}"/>
             <MenuFlyoutItem Text="Manage Kommuner" Command="{Binding KommuneCommand}" />
-            <MenuFlyoutItem Text="Update Kommuner" Command="{Binding UpdateDataView}" Clicked="UpdateDataView_Clicked"/>
+            <MenuFlyoutItem Text="Update Kommuner" Command="{Binding UpdateDataCommand}"/>
             <MenuFlyoutSeparator/>
             <MenuFlyoutItem Text="Tøm Felterne" Command="{Binding ClearCommand}" />
             <MenuFlyoutSeparator/>

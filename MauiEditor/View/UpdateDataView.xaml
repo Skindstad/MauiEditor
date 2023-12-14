@@ -12,26 +12,26 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="40"/>
-                <RowDefinition Height="100"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="40"/>
-                <RowDefinition Height="100"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="40"/>
-                <RowDefinition Height="100"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="100"/>
-                <RowDefinition Height="100"/>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="130"/>
+                <ColumnDefinition Width="200"/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="60"/>
-                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="50"/>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
             <Label Text="Kom_id"
                    FontSize="18"
@@ -39,10 +39,10 @@
                    Grid.Column="0"
                    VerticalOptions="Center"
                    HorizontalOptions="Center"/>
-            <Entry x:Name="Kom_id_Entry"
+            <Entry x:Name="City_Entry"
                    Placeholder="Enter Text"
-                   Text="{Binding Path=Kom_id}"
-                   TextChanged="OnKomIdTextChanged"
+                   Text="{Binding Path=KomId}"
+                   TextChanged="OnCityTextChanged"
                    Grid.Column="0"
                    Grid.Row="1"/>
             <Label Text="City"
@@ -51,12 +51,13 @@
                    Grid.Column="0"
                    VerticalOptions="Center"
                    HorizontalOptions="Center"/>
-            <Entry x:Name="City_Entry"
-                   Placeholder="Enter Text"
-                   Text="{Binding Path=City}"
-                   TextChanged="OnCityTextChanged"
-                   Grid.Column="0"
-                   Grid.Row="3"/>
+            <Picker Title="--Select id--"
+                    Grid.Column="0"
+                    Grid.Row="3"
+                    SelectedItem="{Binding SelectedCity}"
+                    ItemsSource="{Binding CityList}"
+                    ItemDisplayBinding="{Binding value}"/>
+
             <Label Text="Gruppe"
                    FontSize="18"
                    Grid.Row="4"
