@@ -4,9 +4,11 @@ namespace MauiEditor.View;
 
 public partial class KommuneManagerView : ContentPage
 {
-	public KommuneManagerView(KommuneViewModel vm)
+    private KommuneViewModel model = new KommuneViewModel();
+
+    public KommuneManagerView(KommuneViewModel vm)
 	{
 		InitializeComponent();
 		BindingContext = vm;
-	}
+    }
 }

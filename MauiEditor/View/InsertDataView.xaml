@@ -6,10 +6,30 @@
              x:DataType="viewmodel:InsertViewModel"
              Title="InsertDataView">
     <VerticalStackLayout>
-        <Label 
-            Text="Insert"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        <Button Text="Go Back" Command="{Binding GoBackCommand}"/>
+        <Grid Padding="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="70"/>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Picker Grid.Row="0" Grid.Column="0" x:Name="Kommuner" Title="Vælg en kommune" ItemsSource="{Binding KommuneList}" SelectedItem="{Binding SelectedKommune}"/>
+
+            <Picker Grid.Row="1" Grid.Column="0" x:Name="Gruppe" Title="Vælg en gruppe" ItemsSource="{Binding GruppeList}" SelectedItem="{Binding SelectedGruppe}" />
+
+            <Picker Grid.Row="2" Grid.Column="0" x:Name="Year" Title="Vælg en År" ItemsSource="{Binding YearList}" SelectedItem="{Binding SelectedYear}" />
+
+            <Label Grid.Row="3" FontSize="20" Text="Tal:"/>
+            <Entry Grid.Row="4" Text="{Binding Num}" Margin="0,0,0,40" Placeholder="Tal"/>
+
+            <Button Grid.Row="5" Text="Go Back" Command="{Binding GoBackCommand}" WidthRequest="150" HorizontalOptions="Start"/>
+            <Button Grid.Row="5" Text="Skab" Command="{Binding CreateCommand}" WidthRequest="150" HorizontalOptions="End"/>
+        </Grid>
     </VerticalStackLayout>
 </ContentPage>

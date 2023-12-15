@@ -1,4 +1,5 @@
 ﻿using MauiEditor.Model;
+using Microsoft.Maui.Controls;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -173,6 +174,32 @@ namespace MauiEditor.Repository
                 if (connection != null && connection.State == ConnectionState.Open) connection.Close();
             }
             return "";
+        }
+        public List<string>? GetYears()
+        {
+            SqlConnection connection = null;
+            List<string> list = new();
+            try
+            {
+                connection = new SqlConnection(ConfigurationManager.ConnectionStrings["post"].ConnectionString);
+                SqlCommand command = new("SELECT * FROM Aarstal", connection);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                list.Clear();
+                while (reader.Read())
+                {
+                    list.Add(reader[0].ToString());
+                }
+                return list;
+            }
+            catch
+            {
+            }
+            finally
+            {
+                if (connection != null && connection.State == ConnectionState.Open) connection.Close();
+            }
+            return null;
         }
     }
 }

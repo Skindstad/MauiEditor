@@ -84,7 +84,7 @@ namespace MauiEditor.Repository
                 }
             }
             else error = "Illegal value for Kommune";
-            throw new DbException("Error in Kommune repositiory: " + error);
+            //throw new DbException("Error in Kommune repositiory: " + error);
         }
 
         public void Update(string komNr, string city)
@@ -122,7 +122,7 @@ namespace MauiEditor.Repository
                 }
             }
             else error = "Illegal value for city";
-            throw new DbException("Error in Kommune repositiory: " + error);
+            //throw new DbException("Error in Kommune repositiory: " + error);
         }
 
         public void Remove(string komNr)
@@ -204,6 +204,32 @@ namespace MauiEditor.Repository
                 if (connection != null && connection.State == ConnectionState.Open) connection.Close();
             }
             return "";
+        }
+        public List<string>? GetCitys()
+        {
+            SqlConnection connection = null;
+            List<string> list = new();
+            try
+            {
+                connection = new SqlConnection(ConfigurationManager.ConnectionStrings["post"].ConnectionString);
+                SqlCommand command = new("SELECT City FROM Kommune", connection);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                list.Clear();
+                while (reader.Read())
+                {
+                    list.Add(reader[0].ToString());
+                }
+                return list;
+            }
+            catch
+            {
+            }
+            finally
+            {
+                if (connection != null && connection.State == ConnectionState.Open) connection.Close();
+            }
+            return null;
         }
     }
 }
