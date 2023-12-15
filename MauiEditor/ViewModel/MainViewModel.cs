@@ -109,6 +109,11 @@ namespace MauiEditor.ViewModel
             Gruppe = string.Empty;
             Year = string.Empty;
         }
+        [ICommand]
+        async Task UpdateData()
+        {
+            await Shell.Current.GoToAsync(nameof(UpdateDataView));
+        }
 
         [ICommand]
         void Exit()

@@ -14,6 +14,7 @@ namespace MauiEditor
             Routing.RegisterRoute(nameof(InsertDataView), typeof(InsertDataView));
             Routing.RegisterRoute(nameof(KommuneManagerView), typeof(KommuneManagerView));
 
+
         }
     }
 }

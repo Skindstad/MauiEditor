@@ -115,11 +115,11 @@ namespace MauiEditor.Repository
             {
                 try
                 {
-                    string dataId = GetId(data.KomNr, data.Gruppe, data.Year);
+                    // string dataId = GetId(data.KomNr, data.Gruppe, data.Year);
                     string gruppeId = KeynummerRepository.GetId(data.Gruppe);
                     SqlCommand sqlCommand = new("UPDATE Data SET Kom_nr = @KomNr, GruppeId = @Gruppe, Aarstal = @Year, Tal = @Num WHERE Id = @DataId", connection);
                     SqlCommand command = sqlCommand;
-                    command.Parameters.Add(CreateParam("@DataId", dataId, SqlDbType.NVarChar));
+                    command.Parameters.Add(CreateParam("@DataId", data.DataId, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@KomNr", data.KomNr, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@Gruppe", gruppeId, SqlDbType.NVarChar));
                     command.Parameters.Add(CreateParam("@Year", data.Year, SqlDbType.NVarChar));
@@ -143,7 +143,7 @@ namespace MauiEditor.Repository
                 }
             }
             else error = "Illegal value for Data";
-            throw new DbException("Error in Data repositiory: " + error);
+            // throw new DbException("Error in Data repositiory: " + error);
         }
 
         private void UpdateList(Data data)

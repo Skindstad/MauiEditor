@@ -68,14 +68,14 @@ namespace MauiEditor.ViewModel
                 {
                     _selectedCity = value;
                     repository.Search(_selectedCity.cityName, string.Empty, SelectedCity.year);
-                    foreach (var city in repository) // should just be one
+                    foreach (var currentCity in repository) // should just be one
                     {
-                        Aarstal = city.Year;
-                        Gruppe = city.Gruppe;
-                        KomId = city.KomNr;
-                        Tal = city.Num;
-                        _ID = city.DataId;
-                        
+                        City = currentCity.City;
+                        Aarstal = currentCity.Year;
+                        Gruppe = currentCity.Gruppe;
+                        KomId = currentCity.KomNr;
+                        Tal = currentCity.Num;
+                        _ID = currentCity.DataId;
                     }
                 }
             }
@@ -154,7 +154,7 @@ namespace MauiEditor.ViewModel
         private void Update()
         {
             // opdater server med nye værdier
-            // repository.Update(_ID, KomId, City, Gruppe, Aarstal, Tal);
+            repository.Update(_ID, KomId, City, Gruppe, Aarstal, Tal);
         }
 
     }
